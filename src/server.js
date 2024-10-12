@@ -4,10 +4,7 @@ import mongoose from 'mongoose'
 
 mongoose.Promise = global.Promise
 mongoose.connect(config.mongoUri, {
-    useNewUrlParser: true,
-    dbName: 'DressStore',
-    // useCreateIndex: true,
-    // useUnifiedTopology: true
+    dbName: 'DressStore'
 }).then(() => {
     console.log("Connected to the database!");
 })

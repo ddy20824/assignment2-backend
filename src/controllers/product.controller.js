@@ -1,17 +1,19 @@
-import Product from '../models/product.model.js'
 import Category from '../models/category.model.js'
+import Product from '../models/product.model.js'
 import errorHandler from './error.controller.js'
 import extend from 'lodash/extend.js'
 
 const create = async (req, res) => {
     const product = new Product(req.body)
+
+    //Check if category exist
     let isCategoryExist = await Category.exists({ name: req.body.category });
-    console.log(isCategoryExist);
     if (!isCategoryExist) {
         return res.status(400).json({
             error: "Wrong category! Please check again."
         })
     }
+
     try {
         await product.save()
         return res.status(200).json({
@@ -41,8 +43,8 @@ const list = async (req, res) => {
     }
 }
 
+//find the param :id corresponding product
 const productByID = async (req, res, next, id) => {
-    console.log(id);
     try {
         let product = await Product.findById(id)
         if (!product)
@@ -53,7 +55,7 @@ const productByID = async (req, res, next, id) => {
         next()
     } catch (err) {
         return res.status('400').json({
-            error: "Could not retrieve user"
+            error: "Could not retrieve product"
         })
     }
 }
